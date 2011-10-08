@@ -28,18 +28,19 @@ task :default => ["spec"]
 spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
-  s.name              = "IcingaRESTGem"
+  s.name              = "icinga-rest"
   s.version           = "0.1.0"
-  s.summary           = "Use the Icinga REST API to count hosts with services in a given state"
+  s.summary           = "Simple, basic access to the Icinga REST API"
   s.author            = "David Salgado"
   s.email             = "david@digitalronin.com"
-  s.homepage          = "http://roninonrails.wordpress.com/something"
+  s.homepage          = "http://roninonrails.wordpress.com/2011/10/08/icinga-rest-ruby-gem"
 
   s.has_rdoc          = true
   # You should probably have a README of some kind. Change the filename
   # as appropriate
   s.extra_rdoc_files  = %w(Readme.markdown)
   # s.rdoc_options      = %w(--main README)
+  s.description       = "Use the Icinga REST API to count hosts with services in a given state"
 
   # Add any extra files to include in the gem (like your README)
   s.files             = %w(Gemfile Gemfile.lock Rakefile) + Dir.glob("{spec,lib}/**/*")

@@ -1,7 +1,5 @@
-# Class to count services in a given state,
-# optionally filtered by host name, either as
-# a pattern ('foo*', or '*foo*'), or as an 
-# exact match ('foobar')
+# Class to count services in a given state, optionally filtered by host name, either as
+# a pattern ('foo*', or '*foo*'), or as an exact match ('foobar')
 class IcingaRest::ServiceCheck
   attr_accessor :host,    # The Icinga server
                 :authkey, # API key
@@ -13,6 +11,39 @@ class IcingaRest::ServiceCheck
     :critical => 2
   }
 
+  # Define a service check to be carried out.
+  #
+  # Currently, only counting services in a given state is possible,
+  # where the service name and state are provided as literals, with
+  # optional filtering on host name, either as an exact match or 
+  # with wildcards in the host name.
+  #
+  # Arguments:
+  # * :host - The Icinga host. The REST API must be available at the default location
+  #   http://[host]/icinga-web/web/api/
+  # * :authkey - Your API key to access the REST API
+  # * :filter - a list of tuples to filter the count
+  #   e.g.
+  #     [ {:host_name => 'web*'}, {:service_name => 'Load', :state => :critical} ]
+  #
+  #   The :host_name and :service_name should match hosts and services you have configured
+  #   in Icinga (otherwise your count will always be zero).
+  #
+  #   :state should be one of :ok, :warn, :critical
+  #
+  # Example:
+  #
+  #     check = IcingaRest::ServiceCheck.new(
+  #       :host    => 'my.icinga.host',
+  #       :authkey => 'mysecretapikey',
+  #       :filter  => [
+  #         {:host_name    => 'web*'},
+  #         {:service_name => 'Load', :state => :critical}
+  #       ]
+  #     )
+  #
+  #     puts check.count
+  #
   def initialize(params)
     @host    = params[:host]
     @authkey = params[:authkey]

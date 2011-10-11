@@ -4,6 +4,8 @@ end
 
 require 'rubygems'
 require 'json'
+require 'net/http'
+require 'addressable/uri'
 
 libdir = File.join(File.dirname(__FILE__), 'icinga_rest')
 

@@ -1,5 +1,6 @@
 source :rubygems
 gem "json"
+gem "addressable"
 group :development do
   gem "ruby-debug"
   gem "rdoc"

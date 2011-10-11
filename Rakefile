@@ -29,7 +29,7 @@ spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
   s.name              = "icinga-rest"
-  s.version           = "0.1.0"
+  s.version           = "0.1.1"
   s.summary           = "Simple, basic access to the Icinga REST API"
   s.author            = "David Salgado"
   s.email             = "david@digitalronin.com"
@@ -49,6 +49,7 @@ spec = Gem::Specification.new do |s|
   # If you want to depend on other gems, add them here, along with any
   # relevant versions
   s.add_dependency("json")
+  s.add_dependency("addressable")
 
   # If your tests use any gems, include them here
   s.add_development_dependency("rspec")

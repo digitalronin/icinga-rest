@@ -8,8 +8,6 @@ class IcingaRest::Request
                 :count_column, # count this column to produce the total
                 :output        # json|xml
 
-  WGET = '/usr/bin/wget'
-
   def initialize(params)
     @host         = params[:host]
     @target       = params[:target]
@@ -19,13 +17,13 @@ class IcingaRest::Request
     @output       = params[:output]
   end
 
-  # It would be nicer to use Net::HTTP, or something, but the 
-  # URLs required by the Icinga API are not well-formed, and 
-  # the URI library, used by most of the ruby http libs, barfs.
-  # So, we shell out to wget, which is more tolerant.
-  # Fugly, but functional.
+  # The standard URI library blows up with the malformed URLs
+  # required to access the Icinga REST API, but addressable
+  # works fine.
   def get
-    `#{WGET} -q -O - '#{to_url}'`
+    uri = Addressable::URI.parse to_url
+    r = Net::HTTP.get_response uri.normalize
+    r.code == '200' ? r.body : ''
   end
 
   def to_url

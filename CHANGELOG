@@ -1,0 +1,5 @@
+## 0.1.1 
+- Use Addressable::URI instead of shelling out to wget
+
+## 0.1.0 
+- Initial release

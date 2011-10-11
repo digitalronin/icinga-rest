@@ -28,10 +28,6 @@ Requirements
 
 You must have enabled the REST API on your Icinga server (and configured the hosts and services to be monitored, of course)
 
-Any box that runs this check will need the wget program in /usr/bin/wget
-
-wget is used instead of a nice ruby http library because the URLs to access the Icinga REST API are not valid http URLs, so all the libraries I tried barf on them. wget is more forgiving.
-
 MIT License
 ===========
 

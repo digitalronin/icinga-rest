@@ -6,7 +6,9 @@ class IcingaRest::Request
                 :target,       # host|service
                 :filter,       # filter string to use. e.g. 'AND(SERVICE_NAME|=|Foobar;AND(SERVICE_CURRENT_STATE|!=|0))'
                 :count_column, # count this column to produce the total
-                :output        # json|xml
+                :output,       # json|xml
+                :user,         # username for http basic auth
+                :password      # password for http basic auth
 
   def initialize(params)
     @host         = params[:host]
@@ -15,6 +17,8 @@ class IcingaRest::Request
     @count_column = params[:count_column]
     @authkey      = params[:authkey]
     @output       = params[:output]
+    @user         = params[:user]
+    @password     = params[:password]
   end
 
   # The standard URI library blows up with the malformed URLs
@@ -22,7 +26,15 @@ class IcingaRest::Request
   # works fine.
   def get
     uri = Addressable::URI.parse to_url
-    r = Net::HTTP.get_response uri.normalize
+
+    req = Net::HTTP::Get.new(uri.path)
+
+    req.basic_auth user, password if user && password
+
+    r = Net::HTTP.start(uri.hostname, uri.port) {|http|
+      http.request(req)
+    }
+
     r.code == '200' ? r.body : ''
   end
 

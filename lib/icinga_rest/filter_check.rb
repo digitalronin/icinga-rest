@@ -4,7 +4,9 @@ class IcingaRest::FilterCheck
   attr_accessor :host,    # The Icinga server
                 :authkey, # API key
                 :filter,  # List of tuples
-                :target   # target host|service
+                :target,  # target host|service
+                :user,    # user for http basic auth
+                :password # password for http basic auth
 
   SERVICE_STATES = {
     :ok       => 0,
@@ -13,10 +15,12 @@ class IcingaRest::FilterCheck
   }
 
   def initialize(params)
-    @host    = params[:host]
-    @authkey = params[:authkey]
-    @target  = params[:target]
-    @filter  = params[:filter]
+    @host     = params[:host]
+    @authkey  = params[:authkey]
+    @target   = params[:target]
+    @filter   = params[:filter]
+    @user     = params[:user]
+    @password = params[:password]
   end
 
   def count
@@ -38,7 +42,9 @@ class IcingaRest::FilterCheck
       :filter       => filter,
       :count_column => 'SERVICE_ID',
       :authkey      => authkey,
-      :output       => 'json'
+      :output       => 'json',
+      :user         => user,
+      :password     => password
     )
   end
 end

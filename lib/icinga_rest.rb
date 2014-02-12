@@ -11,4 +11,5 @@ libdir = File.join(File.dirname(__FILE__), 'icinga_rest')
 
 require "#{libdir}/request"
 require "#{libdir}/service_check"
+require "#{libdir}/filter_check"
 
